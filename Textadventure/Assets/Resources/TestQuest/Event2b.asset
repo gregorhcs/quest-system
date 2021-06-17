@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a510eb684042ba641a70961a91b29b74, type: 3}
+  m_Name: Event2b
+  m_EditorClassIdentifier: 
+  endings:
+  - next
+  ending: next
+  endingEventPools:
+  - {fileID: 11400000, guid: 81ee26f00e1b7f44c81323600269eae5, type: 2}
+  intensity: 0
+  text: Dolch reist heimlich mit
+  decisionTexts:
+  - '[Weiter]'
