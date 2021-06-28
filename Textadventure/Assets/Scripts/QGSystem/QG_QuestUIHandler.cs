@@ -31,6 +31,11 @@ namespace Assets.Scripts.QGSystem
             Instance = this;
         }
 
+        public void ClearAll()
+        {
+            uiQuestPanel.SetActive(false);
+        }
+
         private void ClearPreviousDrawing()
         {
             foreach (Transform child in uiQuestPanel.transform)
@@ -208,13 +213,13 @@ namespace Assets.Scripts.QGSystem
 
             if (used)
             {
-                lineRenderer.startColor = Color.gray;
-                lineRenderer.endColor = Color.gray;
+                lineRenderer.startColor = new Color(0.75f, 0.75f, 0.75f, 1.0f);
+                lineRenderer.endColor = new Color(0.75f, 0.75f, 0.75f, 1.0f);
             }
             else
             {
-                lineRenderer.startColor = Color.black;
-                lineRenderer.endColor = Color.black;
+                lineRenderer.startColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                lineRenderer.endColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             }
 
             lineRenderer.startWidth = 0.05f;

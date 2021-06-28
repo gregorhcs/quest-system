@@ -30,6 +30,10 @@ public class GameManager : MonoBehaviour
     private List<GameObject> decisionLines;
     private Dictionary<GameObject, string> decisionLineToEnding;
 
+    private bool drawQuest = false;
+
+    private bool fadeInFinished = false;
+
     private void Awake()
     {
         Instance = this;
@@ -108,7 +112,9 @@ public class GameManager : MonoBehaviour
         textPanel.GetComponent<Text>().CrossFadeAlpha(0, 0, false);
         textPanel.GetComponent<Text>().CrossFadeAlpha(1, 0.25f, false);
 
-        QG_QuestUIHandler.Instance.DrawQuestAndFadeIn(quest, 0.25f);
+        if (drawQuest)
+            QG_QuestUIHandler.Instance.DrawQuest(quest);
+            //QG_QuestUIHandler.Instance.DrawQuestAndFadeIn(quest, 0.25f);
 
         if (optionsUI.transform.childCount > 0)
         {
@@ -124,6 +130,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
 
+        fadeInFinished = true;
+
     }
 
     private void Update()
@@ -136,7 +144,10 @@ public class GameManager : MonoBehaviour
             quest.EventUpdate(currentEvent, decisionLineToEnding[focusButton]);
             currentEvent = quest.NextEvent();
             LoadEvent(currentEvent);
-            QG_QuestUIHandler.Instance.DrawQuest(quest);
+
+            if (drawQuest)
+                QG_QuestUIHandler.Instance.DrawQuest(quest);
+
             return;
         }
 
@@ -153,6 +164,21 @@ public class GameManager : MonoBehaviour
                 focusButtonIndex = optionsUI.transform.childCount - 1;
 
             focusToButton(optionsUI.transform.GetChild(focusButtonIndex).gameObject);
+        }
+
+        if (fadeInFinished && Input.GetKeyDown(KeyCode.Tab))
+        {
+            Debug.Log(drawQuest);
+            if (drawQuest)
+            {
+                drawQuest = false;
+                QG_QuestUIHandler.Instance.ClearAll();
+            }
+            else 
+            {
+                drawQuest = true;
+                QG_QuestUIHandler.Instance.DrawQuest(quest);
+            }
         }
     }
 
