@@ -28,10 +28,13 @@ namespace Assets.Scripts.QGSystem
 
             foreach (QG_Event e in pool)
             {
-                e.quest = quest;
+                e.init(quest);
 
                 foreach (QG_EventPool p in e.endingEventPools)
                     connUsed[p] = false;
+
+                if (e is QG_Quest)
+                    ((QG_Quest)e).init();
             }
         }
 

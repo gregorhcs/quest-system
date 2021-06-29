@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    [CreateAssetMenu(menuName = "Cybertext/Event")]
+    [CreateAssetMenu(menuName = "Cybertext/TextEvent")]
     public class CybertextEvent : QG_Event
     {
         public string text;

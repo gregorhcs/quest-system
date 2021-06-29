@@ -9,9 +9,9 @@ namespace Assets.Scripts.QGSystem
 {
     public class QG_Event : ScriptableObject
     {
-        public List<String> endings;
+        public List<String> endings = new List<string>();
 
-        public String ending = null;
+        public String ending = "";
 
         public List<QG_EventPool> endingEventPools;
 
@@ -19,9 +19,15 @@ namespace Assets.Scripts.QGSystem
 
         public QG_Quest quest;
 
+        public void init(QG_Quest q)
+        {
+            quest = q;
+            ending = "";
+        }
+
         public bool IsFinished()
         {
-            return ending != null;
+            return ending != "";
         }
 
     }

@@ -1179,7 +1179,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiQuestPanel: {fileID: 363801822}
-  uiNodePrefab: {fileID: 408211238794816468, guid: 2c1f530c4d910c948b23c7a7563f5073,
+  uiPoolButtonPrefab: {fileID: 408211238794816468, guid: 2c1f530c4d910c948b23c7a7563f5073,
+    type: 3}
+  uiLayerButtonPrefab: {fileID: 7037270958046357135, guid: 106e537951831c1408ef153d1226d97c,
     type: 3}
   uiLinePrefab: {fileID: 3769798555375810704, guid: 2758b42e8a03d5c478154ef42bc3e3c6,
     type: 3}

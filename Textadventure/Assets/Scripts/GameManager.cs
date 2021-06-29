@@ -44,10 +44,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        string[] a = { "end" };
+
         quest = new QG_Quest(
             "Wand'rer",
             Resources.Load<QG_EventPool>("TestQuest/Pool1_Start"),
-            new List<QG_EventPool>(Resources.LoadAll<QG_EventPool>("TestQuest"))
+            new List<QG_EventPool>(Resources.LoadAll<QG_EventPool>("TestQuest")),
+            new List<string>(a)
         );
 
         currentEvent = quest.NextEvent();
@@ -168,7 +171,6 @@ public class GameManager : MonoBehaviour
 
         if (fadeInFinished && Input.GetKeyDown(KeyCode.Tab))
         {
-            Debug.Log(drawQuest);
             if (drawQuest)
             {
                 drawQuest = false;
@@ -194,7 +196,7 @@ public class GameManager : MonoBehaviour
 
         // load
 
-        if (currentEvent == null)
+        if (currentEvent == null) // quest end
             return;
 
         CybertextEvent cyberEvent = (CybertextEvent)event_;

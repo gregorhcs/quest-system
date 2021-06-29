@@ -22,6 +22,8 @@ namespace Assets.Scripts.QGSystem
         private bool toggle = false;
         private bool isDown = false;
 
+        public Action onClickAction = () => { };
+
         private void Start()
         {
             origColor = GetComponent<Image>().color;
@@ -53,16 +55,20 @@ namespace Assets.Scripts.QGSystem
             //isInside = false;
         }
 
-        /*
         public void OnMouseDown()
         {
-            if (isInside)
-            {
-                GetComponent<Image>().color = pressedColor;
-                toggle = true;
-            }
+            Debug.Log("clicked");
+            onClickAction();
+            /*
+                if (isInside)
+                {
+                    GetComponent<Image>().color = pressedColor;
+                    toggle = true;
+                }
+            */
         }
 
+        /*
         private void OnMouseUp()
         {
             if (isInside && toggle)
@@ -83,4 +89,4 @@ namespace Assets.Scripts.QGSystem
         }
         */
     }
-}
+    }
