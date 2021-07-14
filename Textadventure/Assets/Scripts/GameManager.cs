@@ -117,7 +117,6 @@ public class GameManager : MonoBehaviour
 
         if (drawQuest)
             QG_QuestUIHandler.Instance.DrawQuest(quest);
-            //QG_QuestUIHandler.Instance.DrawQuestAndFadeIn(quest, 0.25f);
 
         if (optionsUI.transform.childCount > 0)
         {
@@ -179,7 +178,7 @@ public class GameManager : MonoBehaviour
             else 
             {
                 drawQuest = true;
-                QG_QuestUIHandler.Instance.DrawQuest(quest);
+                QG_QuestUIHandler.Instance.DrawQuest(quest, -1, true);
             }
         }
     }
