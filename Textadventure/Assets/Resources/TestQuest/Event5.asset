@@ -14,11 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endings:
   - next
-  ending: 
+  ending: next
   endingEventPools:
-  - {fileID: 11400000, guid: dba34d3011c16784a9fa2fa3dba1d36e, type: 2}
+  - {fileID: 11400000, guid: f6dc932ef0571084688b4d5b295a2b24, type: 2}
   intensity: 0
   quest: {fileID: 0}
-  text: Er gedenkt sie anzuseh'n
+  text: 'The sun is setting in my back
+
+    Orange lights - no, red lights chasing
+    me
+
+    Black and red, devils forms
+
+    Accelerating, catching up, surrounding
+    me
+
+    Their hatred is approaching me
+
+    
+
+    My senses on alert
+
+    What
+    is it?
+
+
+    > to be c''td ...'
   decisionTexts:
-  - Das ist also der Geschichte Ende. Spannend.
+  - '[end]'

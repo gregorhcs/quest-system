@@ -18,6 +18,26 @@ MonoBehaviour:
   endingEventPools:
   - {fileID: 11400000, guid: 81ee26f00e1b7f44c81323600269eae5, type: 2}
   intensity: 0
-  text: "Gr\xFCn und Grau im Nebellicht"
+  quest: {fileID: 0}
+  text: 'Violence, violet anger everywhere
+
+    It clings to you, chasing your physical
+    self
+
+    Watching the white lines of air streaming while you run
+
+    Is calming
+    but it is no sun
+
+
+    Muscles clench, they want the fight
+
+    A wasted opportunity
+    to show yourself
+
+    Says power center in your brain
+
+    It''s right, but
+    life is short and not long is time'
   decisionTexts:
-  - '[Weiter]'
+  - True mastery shows in patience as in action

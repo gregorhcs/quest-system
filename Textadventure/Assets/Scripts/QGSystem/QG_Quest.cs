@@ -92,7 +92,7 @@ namespace Assets.Scripts
                 else
                 {
                     event_ = currentSubQuest;
-                    ending = event_.endings[0]; // -------------------- TODO
+                    ending = currentSubQuest.ending; //event_.endings[0]; // -------------------- TODO
                 }
             }
 

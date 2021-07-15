@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7952566d03f48c448afc0574cea30455, type: 3}
-  m_Name: MetaQuest
+  m_Name: 1_SQ_A
   m_EditorClassIdentifier: 
   endings: []
   ending: 
   endingEventPools: []
   intensity: 0
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: e732403a79c5ec9459f7696859d0bffb, type: 2}
   name: 
-  start: {fileID: 11400000, guid: a6eb83245d9971843a4e3acec7d02654, type: 2}
+  start: {fileID: 0}
   eventPools: []
   poolsQueue: []
   currentPools: []

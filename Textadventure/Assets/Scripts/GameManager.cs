@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         QG_EventPool tutorialPool = Resources.Load<QG_EventPool>("TestQuest/Pool0_Tutorial");
 
         tutorialPool.pool[0].callback = () =>
-            textPanel.GetComponent<Text>().text = "Cybertext 2020\n\n";
+            textPanel.GetComponent<Text>().text = "Cybertext 2020 © Night Corp.\n\n";
 
         quest = new QG_Quest(
             "Wand'rer",
@@ -143,6 +143,15 @@ public class GameManager : MonoBehaviour
 
     }
 
+    IEnumerator ForceScrollDown()
+    {
+        // Wait for end of frame AND force update all canvases before setting to bottom.
+        yield return new WaitForEndOfFrame();
+        Canvas.ForceUpdateCanvases();
+        scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0f;
+        Canvas.ForceUpdateCanvases();
+    }
+
     private void Update()
     {
         if (fadeInFinished && Input.GetKeyDown(KeyCode.Tab))
@@ -171,7 +180,7 @@ public class GameManager : MonoBehaviour
             if (currentEvent is NoChoiceTimedEvent)
                 StartCoroutine(ProcessNoDecisionTimedEvents());
 
-            //  scrollView.GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 0);
+            StartCoroutine(ForceScrollDown());
 
             if (drawQuest)
                 QG_QuestUIHandler.Instance.DrawQuest(quest);
@@ -213,6 +222,8 @@ public class GameManager : MonoBehaviour
             quest.EventUpdate(currentEvent, "standard");
             currentEvent = quest.NextEvent();
             LoadEvent(currentEvent);
+
+            StartCoroutine(ForceScrollDown());
 
             if (drawQuest)
                 QG_QuestUIHandler.Instance.DrawQuest(quest);

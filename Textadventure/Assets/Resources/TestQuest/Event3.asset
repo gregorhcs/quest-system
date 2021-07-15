@@ -15,13 +15,37 @@ MonoBehaviour:
   endings:
   - next
   - next
-  ending: 
+  ending: next
   endingEventPools:
   - {fileID: 11400000, guid: efe5f648849915646a842ac9f875cff2, type: 2}
   - {fileID: 11400000, guid: efe5f648849915646a842ac9f875cff2, type: 2}
   intensity: 0
   quest: {fileID: 0}
-  text: Die Liebe steht in Flammen
+  text: 'There, below the plates
+
+    People, protecting themselves from that rain
+
+    Fearful,
+    slow, while you are fast
+
+    Through tunnels, under the great bridges of doom
+
+    They
+    will fall
+
+    and you will rise
+
+    
+
+    The air is vibrating, you seem
+    to drown in it
+
+    Violet raindrops fall onto you nose
+
+    In their reflections
+    - the place itself
+
+    You ask:'
   decisionTexts:
-  - Und nun?!
-  - Was mag er wohl vorhaben
+  - '"Is life worth it?"'
+  - '"Is love worth it?"'

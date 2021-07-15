@@ -18,6 +18,27 @@ MonoBehaviour:
   endingEventPools:
   - {fileID: 11400000, guid: 81ee26f00e1b7f44c81323600269eae5, type: 2}
   intensity: 0
-  text: Dolch reist heimlich mit
+  quest: {fileID: 0}
+  text: 'Chuck, chuck, boots in the mud next to the walkway
+
+    Power pose, iron
+    words, piercing gaze
+
+    Mantis blades are slicing cloth, skin and flesh
+
+    Who
+    is the master of place and time?
+
+    
+
+    You run, though you did not need
+    to hide
+
+    You aren''t happy
+
+    and it is no good:
+
+    Time is life,
+    and you''re short of life'
   decisionTexts:
-  - '[Weiter]'
+  - Let my power reign you

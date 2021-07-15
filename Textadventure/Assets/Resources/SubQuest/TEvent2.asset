@@ -19,6 +19,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 688d4d20a7a88104384df36ecef913bd, type: 2}
   intensity: 0
   quest: {fileID: 11400000, guid: 202690f9e43e11e47b94782611f3dffd, type: 2}
-  text: More Walking...
+  text: 'A tired wave is rolling over the roofs
+
+    Raving down, through your heart
+
+    What
+    is your melody? You''re riding on and on, but where to?
+
+    But no- not yet.
+    First the riding.'
   decisionTexts: []
-  secondsToWait: 1
+  secondsToWait: 4

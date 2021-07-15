@@ -11,7 +11,7 @@ namespace Assets.Scripts
     [CreateAssetMenu(menuName = "Cybertext/TextEvent")]
     public class CybertextEvent : QG_Event
     {
-        public string text;
+        [Multiline] public string text;
         public List<string> decisionTexts;
     }
 }

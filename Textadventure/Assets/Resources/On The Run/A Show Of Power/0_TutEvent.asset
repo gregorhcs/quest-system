@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd2e2298da35c3468bd00119884f377, type: 3}
+  m_Name: 0_TutEvent
+  m_EditorClassIdentifier: 
+  endings:
+  - standard
+  ending: 
+  endingEventPools:
+  - {fileID: 0}
+  intensity: 0
+  quest: {fileID: 11400000, guid: e732403a79c5ec9459f7696859d0bffb, type: 2}
+  text: Acknowledged
+  decisionTexts: []

@@ -15,12 +15,14 @@ MonoBehaviour:
   endings:
   - pfad_a
   - pfad_b
-  ending: pfad_a
+  ending: pfad_b
   endingEventPools:
   - {fileID: 11400000, guid: ba87e38135f76a94184b63d2f65c8eaf, type: 2}
   - {fileID: 11400000, guid: 7b063e0c6b44e8641b9832e14fbbaebf, type: 2}
   intensity: 0
-  text: Der Wand'rer eilt zur Stadt
+  quest: {fileID: 0}
+  text: "You're running\r\nFaster and faster\r\nThe neon city lights shining \r\noh
+    so bright\r\nShadows of violence blink into your vision"
   decisionTexts:
-  - "Ich m\xF6chte von der Umgebung wissen."
-  - Was ist seine Motivation?
+  - You ignore them, wisely
+  - You stop and go over

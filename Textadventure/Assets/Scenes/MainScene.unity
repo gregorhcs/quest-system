@@ -286,7 +286,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1801314886}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.5000001
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -638,12 +638,12 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 200
-    m_Top: 50
+    m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: 0
+  m_ChildAlignment: 4
+  m_Spacing: 50
   m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
@@ -723,7 +723,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1342.1221, y: 491.89136}
+  m_SizeDelta: {x: 1342.1221, y: 501.19397}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &991933088
 MonoBehaviour:
@@ -1377,7 +1377,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 508.2, y: -245.94568}
+  m_AnchoredPosition: {x: 508.2, y: -250.59697}
   m_SizeDelta: {x: 1016.447, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1486253977
@@ -1412,10 +1412,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Cybertext 2020\n\n--------- Tutorial ---------\n\nUse \u2191\u2193 or
-    W/A to select options, press ENTER or E to confirm.\n\nPress TAB to toggle Quest
-    UI visibility.\nMind the small buttons in it on the top right, they let you look
-    at other active (sub-)quest layers.\n\n\n\n\n\n\n\n------- Tutorial End -------"
+  m_Text: "Cybertext 2020 \xA9 Night Corp.\n\n> Transmission incoming ... \n| -----------------------------------------------------------------------------------------------------------------------------------\n|\n|
+    Use \u2191\u2193 or W/A to select options, press ENTER or E to confirm.\n|\n|
+    Press TAB to toggle Quest UI visibility.\n| Mind the small buttons in it on the
+    top right, they let you look at other active (sub-)quest layers.\n|\n| Legal
+    info: You have 5 min. to consume this product. Do not exceed the deadline. Do
+    not modify\n| the product. Do not make copies of the product. All illegal action
+    WILL be punished severely.\n|\n| Enjoy!\n|\n| -----------------------------------------------------------------------------------------------------------------------------------\n\n>
+    Transmission End\n\n> Awaiting user input ..."
 --- !u!222 &1486253978
 CanvasRenderer:
   m_ObjectHideFlags: 0

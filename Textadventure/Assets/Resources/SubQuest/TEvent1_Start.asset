@@ -19,6 +19,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 18f28b52520cee5448b5a38d234485ff, type: 2}
   intensity: 0
   quest: {fileID: 11400000, guid: 202690f9e43e11e47b94782611f3dffd, type: 2}
-  text: Walking
+  text: 'The city answers, but you can''t hear it.
+
+    Silent voices everywhere
+
+    You
+    lose your hearing
+
+    Or is it just another level of numbness?'
   decisionTexts: []
-  secondsToWait: 1
+  secondsToWait: 4
