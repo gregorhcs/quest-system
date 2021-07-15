@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject scrollView;
 
+    public AudioSource soundLogo, soundTrack;
+
     private int focusButtonIndex = 0;
     private GameObject focusButton;
 
@@ -64,6 +66,8 @@ public class GameManager : MonoBehaviour
 
         LoadEvent(currentEvent);
         StartCoroutine(FadeInOut());
+
+        soundLogo.Play();
     }
 
     IEnumerator FadeIn(SpriteRenderer image, float duration)
