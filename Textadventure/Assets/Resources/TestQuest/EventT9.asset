@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endings:
   - standard
-  ending: 
+  ending: standard
   endingEventPools:
   - {fileID: 11400000, guid: dba34d3011c16784a9fa2fa3dba1d36e, type: 2}
   intensity: 0
@@ -30,17 +30,15 @@ MonoBehaviour:
     |The
     following items are sources of content for this experience:
 
-    |- Soundtrack:
+    |~ Soundtrack:
     Dandhibeatz (2020). Trappy night
 
-    |- Logo Sound: CD Projekt RED (2013).
-    Cyberpunk 2077 Teaser Trailer
+    |~Logo Sound: CD Projekt RED (2013). Cyberpunk
+    2077 Teaser Trailer
 
     |
 
     | -----------------------------------------------------------------------------------------------------------------------------------
-
-    |
 
     
 

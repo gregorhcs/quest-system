@@ -23,7 +23,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject scrollView;
 
-    public AudioSource soundLogo, soundTrack;
+    public GameObject breachButton;
+
+    public AudioSource soundLogo;
 
     private int focusButtonIndex = 0;
     private GameObject focusButton;
@@ -37,6 +39,8 @@ public class GameManager : MonoBehaviour
     private bool drawQuest = false;
 
     private bool fadeInFinished = false;
+
+    private bool waitForBreach = true;
 
 
     string introText = @"Cybertext 2020 © Night Corp.
@@ -67,9 +71,11 @@ public class GameManager : MonoBehaviour
 
         decisionLines = new List<GameObject>();
         decisionLineToEnding = new Dictionary<GameObject, string>();
+
+        gameplayPanel.SetActive(false);
     }
 
-    private void Start()
+    private void StartIntro()
     {
         string[] a = { "end" };
 
@@ -110,8 +116,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator FadeInOut()
     {
-        gameplayPanel.SetActive(false);
-
         // fading in ct
 
         GameObject[] cts = { ctPanel1, ctPanel2, ctPanel3, ctPanel4 };
@@ -126,7 +130,8 @@ public class GameManager : MonoBehaviour
             cts[i].SetActive(true);
             //StartCoroutine(FadeIn(cts[i].GetComponent<SpriteRenderer>(), 0.2f));
             yield return new WaitForSeconds(0.1f);
-            cts[i].SetActive(false);
+            if (i != 0)
+                cts[i].SetActive(false);
         }
 
         for (int i = 2; i >= 0; i--)
@@ -202,6 +207,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (waitForBreach && Input.GetKeyDown(KeyCode.Return))
+        {
+            waitForBreach = false;
+            breachButton.SetActive(false);
+            StartIntro();
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.F7))
         {
             string[] a = { "end" };
