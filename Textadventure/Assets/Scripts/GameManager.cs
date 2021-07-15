@@ -38,6 +38,29 @@ public class GameManager : MonoBehaviour
 
     private bool fadeInFinished = false;
 
+
+    string introText = @"Cybertext 2020 © Night Corp.
+
+> Transmission incoming ... 
+| -----------------------------------------------------------------------------------------------------------------------------------
+|
+| Use ↑↓ or W/A to select options, press ENTER or E to confirm.
+|
+| Press TAB to toggle Quest UI visibility.
+| Mind the small buttons in it on the top right, they let you look at other active (sub-)quest layers.
+|
+| Legal info: You have 5 min. to consume this product. Do not exceed the deadline. Do not modify
+| the product. Do not make copies of the product. All illegal action WILL be punished severely.
+|
+| Enjoy!
+|
+| -----------------------------------------------------------------------------------------------------------------------------------
+
+> Transmission End
+
+> Awaiting user input ...";
+
+
     private void Awake()
     {
         Instance = this;
@@ -156,8 +179,57 @@ public class GameManager : MonoBehaviour
         Canvas.ForceUpdateCanvases();
     }
 
+    IEnumerator Waiting(float seconds)
+    {
+        seconds -= 0.1f;
+
+        string orig = textPanel.GetComponent<Text>().text;
+
+        string[] waitingStrings = { "\n.", "\n..", "\n...", "\n" };
+        int i = 0;
+
+        while ((seconds - 0.25) >= 0)
+        {
+            textPanel.GetComponent<Text>().text = orig + waitingStrings[i];
+            ForceScrollDown();
+            yield return new WaitForSeconds(0.25f);
+            seconds -= 0.25f;
+            i = (i + 1) % 4;
+        }
+
+        textPanel.GetComponent<Text>().text = orig;
+    }
+
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            string[] a = { "end" };
+
+            QG_EventPool tutorialPool = Resources.Load<QG_EventPool>("TestQuest/Pool0_Tutorial");
+
+            textPanel.GetComponent<Text>().text = introText;
+
+            tutorialPool.pool[0].callback = () =>
+                textPanel.GetComponent<Text>().text = "Cybertext 2020 © Night Corp.\n\n";
+
+            quest = new QG_Quest(
+                "Wand'rer",
+                Resources.Load<QG_EventPool>("TestQuest/Pool0_Tutorial"),
+                new List<QG_EventPool>(Resources.LoadAll<QG_EventPool>("TestQuest")),
+                new List<string>(a)
+            );
+
+            currentEvent = quest.NextEvent();
+
+            LoadEvent(currentEvent);
+
+            if (drawQuest)
+                QG_QuestUIHandler.Instance.DrawQuest(quest, -1, true);
+
+            return;
+        }
+
         if (fadeInFinished && Input.GetKeyDown(KeyCode.Tab))
         {
             if (drawQuest)
@@ -222,7 +294,9 @@ public class GameManager : MonoBehaviour
 
         while (currentEvent != null && currentEvent is NoChoiceTimedEvent)
         {
-            yield return new WaitForSeconds(((NoChoiceTimedEvent) currentEvent).secondsToWait);
+            float secToWait = ((NoChoiceTimedEvent)currentEvent).secondsToWait;
+            StartCoroutine(Waiting(secToWait));
+            yield return new WaitForSeconds(secToWait);
             quest.EventUpdate(currentEvent, "standard");
             currentEvent = quest.NextEvent();
             LoadEvent(currentEvent);
