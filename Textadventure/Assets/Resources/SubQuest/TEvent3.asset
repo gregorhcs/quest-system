@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a510eb684042ba641a70961a91b29b74, type: 3}
-  m_Name: SEvent1_Start
+  m_Script: {fileID: 11500000, guid: 071186eaf00eabd43bb36c79b9bc8340, type: 3}
+  m_Name: TEvent3
   m_EditorClassIdentifier: 
   endings:
-  - next
-  ending: 
+  - standard
+  ending: standard
   endingEventPools:
-  - {fileID: 11400000, guid: 18f28b52520cee5448b5a38d234485ff, type: 2}
+  - {fileID: 11400000, guid: 67627085d27af6248a578ef014ed9c8d, type: 2}
   intensity: 0
   quest: {fileID: 11400000, guid: 202690f9e43e11e47b94782611f3dffd, type: 2}
-  text: Walking
-  decisionTexts:
-  - '[Weiter]'
+  text: Even more walking......
+  decisionTexts: []
+  secondsToWait: 1

@@ -17,12 +17,20 @@ namespace Assets.Scripts.QGSystem
 
         public float intensity;
 
+        public Action callback;
+
         public QG_Quest quest;
 
         public void init(QG_Quest q)
         {
             quest = q;
             ending = "";
+        }
+
+        public void TryCallback()
+        {
+            if (callback != null)
+                callback();
         }
 
         public bool IsFinished()

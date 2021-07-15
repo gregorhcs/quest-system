@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public GameObject ctPanel3;
     public GameObject ctPanel4;
 
+    public GameObject scrollView;
+
     private int focusButtonIndex = 0;
     private GameObject focusButton;
 
@@ -46,9 +48,14 @@ public class GameManager : MonoBehaviour
     {
         string[] a = { "end" };
 
+        QG_EventPool tutorialPool = Resources.Load<QG_EventPool>("TestQuest/Pool0_Tutorial");
+
+        tutorialPool.pool[0].callback = () =>
+            textPanel.GetComponent<Text>().text = "Cybertext 2020\n\n";
+
         quest = new QG_Quest(
             "Wand'rer",
-            Resources.Load<QG_EventPool>("TestQuest/Pool1_Start"),
+            Resources.Load<QG_EventPool>("TestQuest/Pool0_Tutorial"),
             new List<QG_EventPool>(Resources.LoadAll<QG_EventPool>("TestQuest")),
             new List<string>(a)
         );
@@ -138,7 +145,21 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (currentEvent == null)
+        if (fadeInFinished && Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (drawQuest)
+            {
+                drawQuest = false;
+                QG_QuestUIHandler.Instance.ClearAll();
+            }
+            else
+            {
+                drawQuest = true;
+                QG_QuestUIHandler.Instance.DrawQuest(quest, -1, true);
+            }
+        }
+
+        if (currentEvent == null || currentEvent is NoChoiceTimedEvent)
             return;
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
@@ -146,6 +167,11 @@ public class GameManager : MonoBehaviour
             quest.EventUpdate(currentEvent, decisionLineToEnding[focusButton]);
             currentEvent = quest.NextEvent();
             LoadEvent(currentEvent);
+
+            if (currentEvent is NoChoiceTimedEvent)
+                StartCoroutine(ProcessNoDecisionTimedEvents());
+
+            //  scrollView.GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 0);
 
             if (drawQuest)
                 QG_QuestUIHandler.Instance.DrawQuest(quest);
@@ -167,21 +193,32 @@ public class GameManager : MonoBehaviour
 
             focusToButton(optionsUI.transform.GetChild(focusButtonIndex).gameObject);
         }
+    }
 
-        if (fadeInFinished && Input.GetKeyDown(KeyCode.Tab))
+    private IEnumerator ProcessNoDecisionTimedEvents()
+    {
+        // unload decision lines
+
+        foreach (GameObject g in decisionLines)
+            Destroy(g);
+
+        decisionLines.Clear();
+        decisionLineToEnding.Clear();
+
+        // wait until next decision
+
+        while (currentEvent != null && currentEvent is NoChoiceTimedEvent)
         {
+            yield return new WaitForSeconds(((NoChoiceTimedEvent) currentEvent).secondsToWait);
+            quest.EventUpdate(currentEvent, "standard");
+            currentEvent = quest.NextEvent();
+            LoadEvent(currentEvent);
+
             if (drawQuest)
-            {
-                drawQuest = false;
-                QG_QuestUIHandler.Instance.ClearAll();
-            }
-            else 
-            {
-                drawQuest = true;
-                QG_QuestUIHandler.Instance.DrawQuest(quest, -1, true);
-            }
+                QG_QuestUIHandler.Instance.DrawQuest(quest);
         }
     }
+
 
     private void LoadEvent(QG_Event event_)
     {
@@ -202,16 +239,20 @@ public class GameManager : MonoBehaviour
 
         textPanel.GetComponent<Text>().text += "\n\n" + cyberEvent.text;
 
-        for (int i = 0; i < event_.endings.Count; i++)
+        if (cyberEvent.decisionTexts.Count != 0)
         {
-            GameObject newDecisionLine = Instantiate(prefabDecisionLine, optionsUI.transform) as GameObject;
-            newDecisionLine.transform.GetChild(0).GetComponent<Text>().text = "  " + cyberEvent.decisionTexts[i];
-            decisionLines.Add(newDecisionLine);
-            decisionLineToEnding[newDecisionLine] = cyberEvent.endings[i];
+            for (int i = 0; i < event_.endings.Count; i++)
+            {
+                GameObject newDecisionLine = Instantiate(prefabDecisionLine, optionsUI.transform) as GameObject;
+                newDecisionLine.transform.GetChild(0).GetComponent<Text>().text = "  " + cyberEvent.decisionTexts[i];
+                decisionLines.Add(newDecisionLine);
+                decisionLineToEnding[newDecisionLine] = cyberEvent.endings[i];
 
-            if (i == 0)
-                focusToButton(newDecisionLine);
+                if (i == 0)
+                    focusToButton(newDecisionLine);
+            }
         }
+
     }
 
     private void focusToButton(GameObject newFocusButton)

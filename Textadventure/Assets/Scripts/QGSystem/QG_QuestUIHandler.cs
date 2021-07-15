@@ -20,14 +20,14 @@ namespace Assets.Scripts.QGSystem
 
         private QG_Quest questToDraw;
 
-        private Vector3 _origin = new Vector3(-1.6f, 0, 0);
+        private Vector3 _origin = new Vector3(-1.2f, 0, 0);
 
         private float HORIZ_GAP = 0.7f;
         private float VERT_GAP = 0.7f;
 
         private Dictionary<QG_EventPool, Vector3> nodePosRegistry = new Dictionary<QG_EventPool, Vector3>();
 
-        private Bounds uiBoundaries = new Bounds(new Vector3(0, 0, 0), new Vector3(5.6f, 1.6f));
+        private Bounds uiBoundaries = new Bounds(new Vector3(0, 0, 0), new Vector3(4.5f, 1.6f));
 
         private void Awake()
         {
@@ -380,7 +380,7 @@ namespace Assets.Scripts.QGSystem
         {
             GameObject newUINode = Instantiate(uiLayerButtonPrefab, uiQuestPanel.transform) as GameObject;
 
-            newUINode.transform.Translate(new Vector3(5.1f, 0f - 0.25f * depth, 2));
+            newUINode.transform.Translate(new Vector3(4.6f, - 0.2f - 0.25f * depth, 2));
 
             newUINode.GetComponent<Button>().onClick.AddListener(() => DrawQuest(baseQuest, depth, true));
 

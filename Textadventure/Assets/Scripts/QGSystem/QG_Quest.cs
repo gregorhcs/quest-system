@@ -96,6 +96,8 @@ namespace Assets.Scripts
                 }
             }
 
+            event_.TryCallback();
+
             currentEvents.Remove(event_);
 
             // pool update

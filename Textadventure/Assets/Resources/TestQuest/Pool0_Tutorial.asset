@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ec030ebf986a034b8bc3b768e265a31, type: 3}
-  m_Name: SPool2
+  m_Name: Pool0_Tutorial
   m_EditorClassIdentifier: 
   pool:
-  - {fileID: 11400000, guid: 499a8059009b4df4e8ea871205888416, type: 2}
+  - {fileID: 11400000, guid: ec26b89d4c35bf446800e4821c005a05, type: 2}
   activeEvents: 0
-  name_: sub2
-  used: 1
+  name_: tut
+  used: 0
