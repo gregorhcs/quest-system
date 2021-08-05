@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 071186eaf00eabd43bb36c79b9bc8340, type: 3}
-  m_Name: TEvent3
+  m_Name: Event2a.1_T
   m_EditorClassIdentifier: 
   endings:
   - standard
   ending: 
   endingEventPools:
-  - {fileID: 11400000, guid: 4f665f3f3e52ddf458aad70b5d77a65e, type: 2}
+  - {fileID: 11400000, guid: ba87e38135f76a94184b63d2f65c8eaf, type: 2}
   intensity: 0
-  quest: {fileID: 11400000, guid: 202690f9e43e11e47b94782611f3dffd, type: 2}
-  text: 'A stone rolls beneath city walls
+  quest: {fileID: 0}
+  text: 'Violence, violet anger everywhere
 
-    Walls of chrome and steel and night
+    It clings to you, chasing your physical
+    self
 
-    I
-    hear them crying, hear the lights
+    Watching the white lines of air streaming while you run
 
-    Going out, never to be revived'
+    Is calming
+    but it is no sun'
   decisionTexts: []
-  secondsToWait: 4
+  secondsToWait: 2

@@ -21,6 +21,10 @@ namespace Assets.Scripts.QGSystem
         public bool used = false;
         public Dictionary<QG_EventPool, bool> connUsed = new Dictionary<QG_EventPool, bool>();
 
+        public int inCount, outCount;
+
+        public int wave;
+
         public void init(QG_Quest quest)
         {
             used = false;

@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
         QG_EventPool tutorialPool = Resources.Load<QG_EventPool>("TestQuest/Pool0_Tutorial");
 
         tutorialPool.pool[0].callback = () =>
-            textPanel.GetComponent<Text>().text = "Cybertext 2020 © Night Corp.\n\n";
+            textPanel.GetComponent<Text>().text = "Cybertext 2020 © Night Corp.\n";
 
         quest = new QG_Quest(
             "Wand'rer",
@@ -262,6 +262,8 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
+            textPanel.GetComponent<Text>().text += "\n\n[USER DECISION]  »" + focusButton.transform.GetChild(0).GetComponent<Text>().text;
+
             quest.EventUpdate(currentEvent, decisionLineToEnding[focusButton]);
             currentEvent = quest.NextEvent();
             LoadEvent(currentEvent);

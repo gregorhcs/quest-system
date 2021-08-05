@@ -10,22 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 071186eaf00eabd43bb36c79b9bc8340, type: 3}
-  m_Name: TEvent3
+  m_Name: TEvent4
   m_EditorClassIdentifier: 
   endings:
   - standard
-  ending: 
+  ending: standard
   endingEventPools:
-  - {fileID: 11400000, guid: 4f665f3f3e52ddf458aad70b5d77a65e, type: 2}
+  - {fileID: 11400000, guid: 67627085d27af6248a578ef014ed9c8d, type: 2}
   intensity: 0
   quest: {fileID: 11400000, guid: 202690f9e43e11e47b94782611f3dffd, type: 2}
-  text: 'A stone rolls beneath city walls
+  text: 'The sun is setting in my back
 
-    Walls of chrome and steel and night
+    Orange lights - no, red lights chasing
+    me
 
-    I
-    hear them crying, hear the lights
+    Black and red, devils forms
 
-    Going out, never to be revived'
+    Accelerating, catching up, surrounding
+    me
+
+    Their hatred is approaching me'
   decisionTexts: []
-  secondsToWait: 4
+  secondsToWait: 2

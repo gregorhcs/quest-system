@@ -478,13 +478,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.28929338, g: 0.3088041, b: 0.31132078, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 481bc204f6f3540458f7cdc0a12fa518, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1653,7 +1653,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 508.2, y: -253.25208}
+  m_AnchoredPosition: {x: 508.2, y: -253.2521}
   m_SizeDelta: {x: 1016.447, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1486253977
@@ -1804,6 +1804,8 @@ MonoBehaviour:
   uiLayerButtonPrefab: {fileID: 7037270958046357135, guid: 106e537951831c1408ef153d1226d97c,
     type: 3}
   uiLinePrefab: {fileID: 3769798555375810704, guid: 2758b42e8a03d5c478154ef42bc3e3c6,
+    type: 3}
+  uiStarPrefab: {fileID: 5969057935918860836, guid: b11350ee146f33f40b3011890c05e9c9,
     type: 3}
 --- !u!4 &1734457993
 Transform:

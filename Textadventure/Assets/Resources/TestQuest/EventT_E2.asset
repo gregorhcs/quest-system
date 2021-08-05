@@ -9,21 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a510eb684042ba641a70961a91b29b74, type: 3}
-  m_Name: Event5
+  m_Script: {fileID: 11500000, guid: 071186eaf00eabd43bb36c79b9bc8340, type: 3}
+  m_Name: EventT_E2
   m_EditorClassIdentifier: 
   endings:
-  - next
+  - standard
   ending: 
   endingEventPools:
-  - {fileID: 11400000, guid: f6dc932ef0571084688b4d5b295a2b24, type: 2}
+  - {fileID: 11400000, guid: 74f684f6f855be14bbe16ce5546418f6, type: 2}
   intensity: 0
   quest: {fileID: 0}
-  text: 'My senses on alert
-
-    What is it?
-
-
-    > to be c''td ...'
-  decisionTexts:
-  - '[end]'
+  text: '> reduced by 10% if bought within the next 10 seconds'
+  decisionTexts: []
+  secondsToWait: 4

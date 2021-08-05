@@ -15,10 +15,10 @@ MonoBehaviour:
   endings:
   - pfad_a
   - pfad_b
-  ending: pfad_b
+  ending: pfad_a
   endingEventPools:
-  - {fileID: 11400000, guid: ba87e38135f76a94184b63d2f65c8eaf, type: 2}
-  - {fileID: 11400000, guid: 7b063e0c6b44e8641b9832e14fbbaebf, type: 2}
+  - {fileID: 11400000, guid: 5095c92dfc8ca54479a034997caa1c5e, type: 2}
+  - {fileID: 11400000, guid: 3808dfdded354514ba9f9b4027786c5a, type: 2}
   intensity: 0
   quest: {fileID: 0}
   text: "You're running\r\nFaster and faster\r\nThe neon city lights shining \r\noh

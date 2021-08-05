@@ -25,10 +25,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06eb24e27d6f30f4fbb06a05ba0a4f5c, type: 2}
   - {fileID: 11400000, guid: 18f28b52520cee5448b5a38d234485ff, type: 2}
   - {fileID: 11400000, guid: 688d4d20a7a88104384df36ecef913bd, type: 2}
+  - {fileID: 11400000, guid: 4f665f3f3e52ddf458aad70b5d77a65e, type: 2}
   - {fileID: 11400000, guid: 67627085d27af6248a578ef014ed9c8d, type: 2}
-  poolsQueue:
+  poolsQueue: []
+  currentPools:
   - {fileID: 11400000, guid: 06eb24e27d6f30f4fbb06a05ba0a4f5c, type: 2}
-  currentPools: []
-  currentEvents: []
+  currentEvents:
+  - {fileID: 11400000, guid: 45dcced007d69a94f81b2b8cec193f4a, type: 2}
   currentSubQuest: {fileID: 0}
   end: {fileID: 11400000, guid: 67627085d27af6248a578ef014ed9c8d, type: 2}
