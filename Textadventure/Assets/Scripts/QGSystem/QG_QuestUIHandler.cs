@@ -1,55 +1,86 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.QGSystem
 {
+    /* This singleton manages the quest UI and draws QG_Quests on it.
+     * 
+     * Public Methods:
+     * - Deactivate().  Turns off the quest UI.
+     * - DrawQuest(..). Turns on the quest UI and draws the given quest.
+     * 
+     * There three major sections in this class:
+     * 1. Variables and Initializer
+     * 2. Methods concerning the whole quest UI
+     * 3. Methods concerning specific parts of the quest UI
+     * 
+     * The most central method is DrawQuest, which contains or delegates
+     * almost every functionality implemented.
+     */
     public class QG_QuestUIHandler : MonoBehaviour
     {
+        // Statics
+
         public static QG_QuestUIHandler Instance;
+
+        // Constants
+
+        private Vector3 ORIGIN = new Vector3(-1.2f, 0, 0);
+
+        private float HORIZ_GAP = 0.7f;
+        private float VERT_GAP  = 0.7f;
+
+        private float CHANCE_HIDE_FARAWAY = 0.7f;
+
+        private Bounds UI_BOUNDARIES = 
+            new Bounds(new Vector3(0, 0, 0), new Vector3(4.5f, 1.6f));
+
+        // Prefabs
 
         public GameObject uiQuestPanel;
         public GameObject uiPoolButtonPrefab;
         public GameObject uiLayerButtonPrefab;
         public GameObject uiLinePrefab;
         public GameObject uiStarPrefab;
+        public GameObject uiLSwitchPrefab;
+        public GameObject uiRSwitchPrefab;
+
+        // Changing Variables
 
         private QG_Quest questToDraw;
 
-        private Vector3 _origin = new Vector3(-1.2f, 0, 0);
+        private Dictionary<QG_EventPool, Vector3> nodePosRegistry = 
+            new Dictionary<QG_EventPool, Vector3>();
 
-        private float HORIZ_GAP = 0.7f;
-        private float VERT_GAP = 0.7f;
+        private int lastDepth = 0;
 
-        private Dictionary<QG_EventPool, Vector3> nodePosRegistry = new Dictionary<QG_EventPool, Vector3>();
 
-        private Bounds uiBoundaries = new Bounds(new Vector3(0, 0, 0), new Vector3(4.5f, 1.6f));
-
+        /* Sets up the singleton. */
         private void Awake()
         {
             Instance = this;
         }
 
+
         // ---------------------------------------------------------------------
         //          methods that are concerned with the whole quest UI
         // ---------------------------------------------------------------------
 
+        /* Fades the quest panel in or out (in_) in duration seconds. 
+           Does not trigger activation of the quest panel or quest drawing. */
         private void Fade(bool in_, float duration)
         {
             if (in_)
             {
-                Debug.Log("Fade in");
                 uiQuestPanel.GetComponent<Image>().CrossFadeAlpha(0, 0, false);
                 uiQuestPanel.GetComponent<Image>().CrossFadeAlpha(1, duration, false);
             }
             else
             {
-                Debug.Log("Fade out");
                 uiQuestPanel.GetComponent<Image>().CrossFadeAlpha(1, 0, false);
                 uiQuestPanel.GetComponent<Image>().CrossFadeAlpha(0, duration, false);
             }
@@ -88,7 +119,8 @@ namespace Assets.Scripts.QGSystem
             }
         }
 
-        public void ClearAll()
+        /* Fades out the quest panel and deactivates it. */
+        public void Deactivate()
         {
             if (questToDraw != null)
                 Fade(false, 0.25f);
@@ -96,6 +128,7 @@ namespace Assets.Scripts.QGSystem
             uiQuestPanel.SetActive(false);
         }
 
+        /* Clears and draws quest at depth with potential fade-in. */
         public void DrawQuest(QG_Quest quest, int depth = -1, bool fade = false)
         {
             if (questToDraw != null && fade)
@@ -106,6 +139,7 @@ namespace Assets.Scripts.QGSystem
             if (fade)
                 Fade(true, 0.25f);
         }
+        /* Clears and draws baseQuest at depth. */
         private void DrawQuest(QG_Quest baseQuest, int depth)
         {
             foreach (Transform child in uiQuestPanel.transform)
@@ -116,24 +150,23 @@ namespace Assets.Scripts.QGSystem
 
             uiQuestPanel.SetActive(true);
 
-            //Debug.Log("Begin Draw Quest " + baseQuest.name + " " + depth);
-            //Debug.Log(quest);
-
-            // ------------ sub quest handling ------------
+            // 1) sub quest handling -----------
 
             QG_Quest previousQuestToDraw = questToDraw;
 
             QG_Quest curQuest = baseQuest;
+            int questToDrawDepth = -1;
             int depthCounter = 0;
 
             while (curQuest != null)
             {
                 bool isActive = false;
 
-                if (   (depth == -1 && curQuest.currentSubQuest == null) 
-                    || (depth != -1 && depthCounter == depth           ))
+                if (   (depth == -1 && curQuest.currentSubQuest == null)  // innermost level wanted & reached
+                    || (depth != -1 && depthCounter == depth           )) // other level wanted & reached
                 {
                     questToDraw = curQuest;
+                    questToDrawDepth = depthCounter;
                     isActive = true;
                 }
 
@@ -141,27 +174,17 @@ namespace Assets.Scripts.QGSystem
                 curQuest = curQuest.currentSubQuest;
                 depthCounter++;
             }
-            Debug.Log(questToDraw);
 
-            // ------------ shift origin ------------
-            //
-            // origin shifts leftwards d units, where d is the 
-            // distance from start to the last active node (lan)
-            //
-            // does not apply if start node is close (d < 3) to lan
-
-            
-
-            // ------------ node registry ------------
+            // 2) node registry -----------
             //
             // draw from left to right via breadth first search
             // nodes with same depth are stacked vertically
 
             HashSet<QG_EventPool> wavesAhead = new HashSet<QG_EventPool>(questToDraw.eventPools);
-            wavesAhead.Remove(questToDraw.start);
+            wavesAhead.Remove(questToDraw.startPool);
 
             HashSet<QG_EventPool> wave = new HashSet<QG_EventPool>();
-            wave.Add(questToDraw.start);
+            wave.Add(questToDraw.startPool);
 
             HashSet<QG_EventPool> wavesBehind = new HashSet<QG_EventPool>();
 
@@ -172,7 +195,7 @@ namespace Assets.Scripts.QGSystem
 
             while (wave.Count() != 0)
             {
-                ComputeNodePositions(waveCount, wave); // registers node positions in nodePosRegistry
+                ComputeNodePositions(waveCount, wave); 
 
                 HashSet<QG_EventPool> newWave = new HashSet<QG_EventPool>();
 
@@ -180,7 +203,7 @@ namespace Assets.Scripts.QGSystem
                 {
                     pool.wave = waveCount;
 
-                    if (pool.isActive())
+                    if (pool.IsActive())
                     {
                         activeNodeDist = waveCount;
                     }
@@ -213,9 +236,12 @@ namespace Assets.Scripts.QGSystem
             if (activeNodeDist == -1)
                 activeNodeDist = waveCount;
 
-            // ------------ node draw ------------------
+            // 3) node draw  -----------
+            //
+            // activeNodeOffset ensures active node is always at same pos
+            // distinction between nearby/faraway drawn nodes (left/right of dashed line)
 
-            float activeNodeOffset = activeNodeDist < 1 ?
+            float activeNodeOffset = activeNodeDist < 0 ?
                 0 : (activeNodeDist - 1) * HORIZ_GAP;
 
             int farawayDrawn = 0;
@@ -224,28 +250,32 @@ namespace Assets.Scripts.QGSystem
             {
                 nodePosRegistry[p] = new Vector3(nodePosRegistry[p].x - activeNodeOffset, nodePosRegistry[p].y, 0);
 
-                if (-1 < (activeNodeDist - p.wave) && (activeNodeDist - p.wave) < 3)
+                // nearby: nodes around active node depth
+                if (0 <= (activeNodeDist - p.wave) && (activeNodeDist - p.wave) <= 2)
                     DrawPool(p, true);
 
+                // faraway: nodes that border active node
                 else if (-1 == (activeNodeDist - p.wave))
                     DrawPool(p, false);
 
-                else if (UnityEngine.Random.value > 0.7f && !(farawayDrawn >= 3))
+                // faraway: capped number of random other nodes
+                else if (Random.value > CHANCE_HIDE_FARAWAY && !(farawayDrawn >= 3))
                 {
                     DrawPool(p, false);
                     farawayDrawn++;
                 }
-
-                p.inCount = p.outCount = 0;
             }
 
-            // ------------ arrow draw ------------
+            // 4) line draw -----------
             //
-            // draw an arrow from pool A to pool B if pool A
+            // draw a line from pool A to pool B if pool A
             // contains an event that has an ending leading to B
 
-            DrawArrow(new Vector3(_origin.x - HORIZ_GAP - activeNodeOffset, 0, 0), nodePosRegistry[questToDraw.start], true);
-            questToDraw.start.inCount += 1;
+            if (activeNodeDist >= 0 && activeNodeDist < 3)
+            {
+                DrawLine(new Vector3(ORIGIN.x - HORIZ_GAP - activeNodeOffset, 0, 0), 
+                    nodePosRegistry[questToDraw.startPool], true);
+            }
 
             foreach (QG_EventPool p1 in questToDraw.eventPools)
             {
@@ -256,23 +286,22 @@ namespace Assets.Scripts.QGSystem
                 {
                     foreach (QG_EventPool p2 in event_.endingEventPools)
                     {
-                        if (!(-1 < (activeNodeDist - p1.wave) && (activeNodeDist - p1.wave) < 3)) // forward, backwards
+                        // forward arrow visibility radius is restrained
+                        if ((activeNodeDist - p1.wave) < 0)
                             continue;
 
-                        Vector3 s = nodePosRegistry[p1];
-                        Vector3 d = nodePosRegistry[p2];
-                        bool r = p1.connUsed[p2];
+                        Vector3 pos1 = nodePosRegistry[p1];
+                        Vector3 pos2 = nodePosRegistry[p2];
+                        bool    used = p1.connUsed[p2];
 
                         if (!outPools.Contains(p2))
                         {
-                            DrawArrow(s, d, r);
-                            p1.outCount += 1;
-                            p2.inCount += 1;
+                            DrawLine(pos1, pos2, used);
                             outPools.Add(p2);
                         }
                         else if (!starred.Contains(p2))
                         {
-                            DrawArrowStar(s, d, r);
+                            DrawArrowStar(pos1, pos2, used);
                             starred.Add(p2);
                         }
 
@@ -280,25 +309,71 @@ namespace Assets.Scripts.QGSystem
                 }
             }
 
-            // ---------- optional fade in -------------
+            // 5) quest layer change anim & fade in -------------
             //
-            // occurs if a change in quests occurs, e.g.
+            // can occur if a change in quest layer occurs, e.g.
             // - change into subquest
             // - whole quest exchanged
 
             if (previousQuestToDraw != questToDraw)
-                Fade(true, 0.25f);
+            {
+                if (questToDrawDepth != lastDepth)
+                {
+                    float duration = 0.5f;
 
+                    GameObject leftUINode = Instantiate(uiLSwitchPrefab, uiQuestPanel.transform) as GameObject;
+                    GameObject rightUINode = Instantiate(uiRSwitchPrefab, uiQuestPanel.transform) as GameObject;
+
+                    if (questToDrawDepth > lastDepth) // into subquest
+                    {
+                        leftUINode.transform.Translate(new Vector3(0.0f, +0.25f, 0.0f));
+                        rightUINode.transform.Translate(new Vector3(0.0f, +0.25f, 0.0f));
+                    }
+                    else if (questToDrawDepth < lastDepth) // out of subquest
+                    {
+                        leftUINode.transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
+                        rightUINode.transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
+
+                        leftUINode.transform.Translate(new Vector3(0.0f, 1.02f, 0.0f));
+                        rightUINode.transform.Translate(new Vector3(0.0f, 1.02f, 0.0f));
+                    }
+
+                    StartCoroutine(LayerSwitchAnimation(duration, leftUINode, rightUINode));
+                }
+
+                Fade(true, 0.25f);
+            }
+
+            lastDepth = questToDrawDepth;
         }
+
 
 
         // ---------------------------------------------------------------------
         //                     methods to draw sub elements
         // ---------------------------------------------------------------------
 
+        /* Plays an animation which lets two sets of arrows move and vanish. 
+           If a set of arrows is rotated, then it'll move in the respective new direction. */
+        private IEnumerator LayerSwitchAnimation(float duration, GameObject arrows1, GameObject arrows2)
+        {
+            float DISTANCE = 1.27f;
+            int   STEPS    = 100;
+
+            for (int i = 0; i < STEPS; i++)
+            {
+                arrows1.transform.Translate(new Vector3(0.0f, - DISTANCE / STEPS, 0.0f));
+                arrows2.transform.Translate(new Vector3(0.0f, - DISTANCE / STEPS, 0.0f));
+                yield return new WaitForSeconds(duration / STEPS);
+            }
+
+            Destroy(arrows1); Destroy(arrows2);
+        }
+
+        /* Computes and saves positions in nodePosRegistry - for nodes with same depth. */
         private void ComputeNodePositions(int horizDist, HashSet<QG_EventPool> nodes)
         {
-            float x = _origin.x + horizDist * HORIZ_GAP;
+            float x = ORIGIN.x + horizDist * HORIZ_GAP;
 
             int nodesCount = nodes.Count();
 
@@ -306,25 +381,26 @@ namespace Assets.Scripts.QGSystem
                 return;
 
             else if (nodesCount == 1)
-                nodePosRegistry[nodes.ElementAt(0)] = new Vector3(x, _origin.y, 0);
+                nodePosRegistry[nodes.ElementAt(0)] = new Vector3(x, ORIGIN.y, 0);
 
             else
             {
                 float yOffset = - (nodesCount - 1) * HORIZ_GAP / 2;
 
                 for (int i = 0; i < nodesCount; i++)
-                    nodePosRegistry[nodes.ElementAt(i)] = new Vector3(x, _origin.y + yOffset + i * VERT_GAP, 0);
+                    nodePosRegistry[nodes.ElementAt(i)] = new Vector3(x, ORIGIN.y + yOffset + i * VERT_GAP, 0);
             }
 
         }
-        
+
+        /* Draws an event pool/node based on his registered position and type. */
         private void DrawPool(QG_EventPool node, bool nearby)
         {
             // boundary test
 
             Vector3 pos = nodePosRegistry[node];
 
-            if (!uiBoundaries.Contains(pos))
+            if (!UI_BOUNDARIES.Contains(pos))
                 return;
 
             // draw
@@ -332,31 +408,20 @@ namespace Assets.Scripts.QGSystem
             GameObject newUINode = Instantiate(uiPoolButtonPrefab, uiQuestPanel.transform) as GameObject;
             newUINode.transform.Translate(pos);
 
-            newUINode.transform.Find("Text").gameObject.GetComponent<Text>().text = node.name_;
+            newUINode.transform.Find("Text").gameObject.GetComponent<Text>().text = node.name;
 
             // faraway
 
             if (! nearby)
             {
-                Debug.Log(node);
-
                 if (node.pool.Count == 0 || node.pool[0] is NoChoiceTimedEvent || node.pool[0] is TutorialEvent)
-                {
-                    Debug.Log("c");
                     newUINode.transform.Find("AheadMisc").gameObject.SetActive(true);
-                }
 
                 else if (node.pool[0] is QG_Quest)
-                {
-                    Debug.Log("a");
                     newUINode.transform.Find("AheadSubquest").gameObject.SetActive(true);
-                }
 
                 else // is choice
-                {
-                    Debug.Log("b");
                     newUINode.transform.Find("AheadChoice").gameObject.SetActive(true);
-                }
 
                 return;
             }
@@ -365,17 +430,17 @@ namespace Assets.Scripts.QGSystem
 
             newUINode.transform.Find("HereBase").gameObject.SetActive(true);
 
-            if (node.pool.Count == 0 || node.pool[0] is NoChoiceTimedEvent || node.pool[0] is TutorialEvent)
+            if (node.IsEnding() || node.pool[0] is NoChoiceTimedEvent || node.pool[0] is TutorialEvent)
             {
-                if (node.isActive() || questToDraw.poolsQueue.Contains(node))
+                if (node.IsActive() || questToDraw.poolsQueue.Contains(node))
                     newUINode.transform.Find("HereCircle-On").gameObject.SetActive(true);
 
                 if (node.used)
                     newUINode.transform.Find("HereCircle").gameObject.SetActive(true);
 
-                if (node.pool.Count() == 0)
+                if (node.IsEnding())
                 {
-                    string suffix = (node.isActive() || questToDraw.poolsQueue.Contains(node)) ? "-On" : "";
+                    string suffix = (node.IsActive() || questToDraw.poolsQueue.Contains(node)) ? "-On" : "";
 
                     newUINode.transform.Find("HereL45" + suffix).gameObject.SetActive(true);
                     newUINode.transform.Find("HereL-45" + suffix).gameObject.SetActive(true);
@@ -386,7 +451,7 @@ namespace Assets.Scripts.QGSystem
 
             else if (node.pool[0] is QG_Quest)
                 {
-                if (node.isActive() || questToDraw.poolsQueue.Contains(node))
+                if (node.IsActive() || questToDraw.poolsQueue.Contains(node))
                     newUINode.transform.Find("HereSubquest-On").gameObject.SetActive(true);
                 else
                     newUINode.transform.Find("HereSubquest").gameObject.SetActive(true);
@@ -394,25 +459,35 @@ namespace Assets.Scripts.QGSystem
 
             else
             {
-                if (node.isActive() || questToDraw.poolsQueue.Contains(node))
+                if (node.IsActive() || questToDraw.poolsQueue.Contains(node))
                     newUINode.transform.Find("HereChoice-On").gameObject.SetActive(true);
                 else
                     newUINode.transform.Find("HereChoice").gameObject.SetActive(true);
             }
         }
 
-        private void DrawArrow(Vector3 start, Vector3 end, bool used)
+        /* Draws a line from start to end with color depending on used. */
+        private void DrawLine(Vector3 start, Vector3 end, bool used)
         {
             // boundary test
 
-            bool startInside = uiBoundaries.Contains(start);
-            bool endInside = uiBoundaries.Contains(end);
+            bool startInside = UI_BOUNDARIES.Contains(start);
+            bool endInside = UI_BOUNDARIES.Contains(end);
+
+            float startPosScale = 1.0f;
+            float endPosScale = 1.0f;
 
             if (!startInside && endInside)
-                start += (end - start) / 2;
+            {
+                start += (end - start) / 4;
+                endPosScale = 0.75f;
+            }
 
             else if (startInside && !endInside)
-                end -= (end - start) / 2;
+            {
+                end -= (end - start) / 4;
+                startPosScale = 0.75f;
+            }
 
             else if (!startInside && !endInside)
                 return;
@@ -438,33 +513,41 @@ namespace Assets.Scripts.QGSystem
 
             lineRenderer.startWidth = 0.05f;
             lineRenderer.endWidth = 0.05f;
-            lineRenderer.SetPosition(0, (end - start) * 28);
-            lineRenderer.SetPosition(1, (end - start) * 80);
+            lineRenderer.SetPosition(0, (end - start) * 28 * startPosScale);
+            lineRenderer.SetPosition(1, (end - start) * 80 * endPosScale);
             lineRenderer.useWorldSpace = false;
 
         }
 
+        /* Draws a star above a line, indicating several edges between start and end. */
         private void DrawArrowStar(Vector3 start, Vector3 end, bool used)
         {
             Vector3 pos = start + (end - start) / 2 + new Vector3(0.0f, 0.1f);// + new Vector3(1.15f, -0.5f);
 
-            if (!uiBoundaries.Contains(pos))
+            if (!UI_BOUNDARIES.Contains(pos))
                 return;
 
             GameObject newUINode = Instantiate(uiStarPrefab, uiQuestPanel.transform) as GameObject;
             newUINode.transform.Translate(pos);
+
+            if (used)
+                newUINode.transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(0.0f, 1.0f, 1.0f, 1.0f);
+
         }
 
+        /* Draws a button that allows player changing quest layers in the quest Ui. */
         private void DrawLayerButton(QG_Quest baseQuest, int depth, bool isActive)
         {
             GameObject newUINode = Instantiate(uiLayerButtonPrefab, uiQuestPanel.transform) as GameObject;
 
-            newUINode.transform.Translate(new Vector3(4.6f, - 0.2f - 0.25f * depth, 2));
+            newUINode.transform.Translate(new Vector3(4.585f, - 0.196f - 0.2f * depth, 2));
 
             newUINode.GetComponent<Button>().onClick.AddListener(() => DrawQuest(baseQuest, depth, true));
 
             if (isActive)
-                newUINode.GetComponent<Image>().color = new Color(0f, 0.5f, 0f, 1f);
+                newUINode.GetComponent<Image>().color = new Color(0f, 1f, 0f, 1f);
+            else
+                newUINode.GetComponent<Image>().color = new Color(1f, 0f, 1f, 1f);
 
         }
 

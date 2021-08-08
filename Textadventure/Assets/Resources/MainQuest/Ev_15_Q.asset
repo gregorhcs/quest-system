@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7952566d03f48c448afc0574cea30455, type: 3}
+  m_Name: Ev_15_Q
+  m_EditorClassIdentifier: 
+  endings:
+  - SubQuestEnd
+  ending: 
+  endingEventPools:
+  - {fileID: 11400000, guid: e041d8f3281da7541808a88a6df4c5f9, type: 2}
+  intensity: 0
+  quest: {fileID: 0}
+  name: SubQuest2
+  start: {fileID: 11400000, guid: 0e553e03fafe9bb4fa4033e49a341f98, type: 2}
+  eventPools:
+  - {fileID: 11400000, guid: 0e553e03fafe9bb4fa4033e49a341f98, type: 2}
+  - {fileID: 11400000, guid: 0f372972c3e5542499c76e7efd81e76d, type: 2}
+  - {fileID: 11400000, guid: 8a27cbfc349874548bef6fa10f27d036, type: 2}
+  - {fileID: 11400000, guid: 92d88da2c6e40e24f9d102b59e2ab6e7, type: 2}
+  - {fileID: 11400000, guid: 8772a0f2b2856da4da22b82c3e1dda79, type: 2}
+  - {fileID: 11400000, guid: 42de1d9d26aa53c4c87d7bfd6b0ab418, type: 2}
+  poolsQueue:
+  - {fileID: 11400000, guid: 0e553e03fafe9bb4fa4033e49a341f98, type: 2}
+  currentPools: []
+  currentEvents: []
+  currentSubQuest: {fileID: 0}
+  end: {fileID: 11400000, guid: 42de1d9d26aa53c4c87d7bfd6b0ab418, type: 2}

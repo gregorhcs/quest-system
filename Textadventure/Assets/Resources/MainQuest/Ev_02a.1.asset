@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071186eaf00eabd43bb36c79b9bc8340, type: 3}
+  m_Name: Ev_02a.1
+  m_EditorClassIdentifier: 
+  endings:
+  - standard
+  ending: 
+  endingEventPools:
+  - {fileID: 11400000, guid: ba87e38135f76a94184b63d2f65c8eaf, type: 2}
+  intensity: 0
+  quest: {fileID: 0}
+  text: 'Violence, violet anger everywhere
+
+    It clings to you, chasing your physical
+    self
+
+    Watching the white lines of air streaming while you run
+
+    Is calming
+    but it is no sun'
+  decisionTexts: []
+  secondsToWait: 2

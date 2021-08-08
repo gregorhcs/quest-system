@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071186eaf00eabd43bb36c79b9bc8340, type: 3}
+  m_Name: Ev_18b
+  m_EditorClassIdentifier: 
+  endings:
+  - standard
+  ending: 
+  endingEventPools:
+  - {fileID: 11400000, guid: c9b12490c7d9a1a45819ba1bb6548539, type: 2}
+  intensity: 0
+  quest: {fileID: 0}
+  text: "You are shot down in masses\nAuto DNA-ID ON-line Defensive Sys. \xAE Militech
+    Corp.\nProgrammed hesitation overwhelms you - edgy bullets penetrating\nBut the
+    moment of possibility is gone."
+  decisionTexts: []
+  secondsToWait: 4

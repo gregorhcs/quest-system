@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a510eb684042ba641a70961a91b29b74, type: 3}
+  m_Name: Ev_01_D
+  m_EditorClassIdentifier: 
+  endings:
+  - pfad_a
+  - pfad_b
+  ending: pfad_a
+  endingEventPools:
+  - {fileID: 11400000, guid: 5095c92dfc8ca54479a034997caa1c5e, type: 2}
+  - {fileID: 11400000, guid: 3808dfdded354514ba9f9b4027786c5a, type: 2}
+  intensity: 0
+  quest: {fileID: 0}
+  text: "You're running\r\nFaster and faster\r\nThe neon city lights shining \r\noh
+    so bright\r\nShadows of violence blink into your vision"
+  decisionTexts:
+  - You ignore them, wisely
+  - You stop and go over

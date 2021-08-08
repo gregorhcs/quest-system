@@ -3,12 +3,27 @@ using Assets.Scripts.QGSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
+
+/* This singleton handles the entire Cybertext-specific functionality. 
+ *
+ * In the beginning the manager distinguishes three phases:
+ * 1. wait for initial enter ("breach")
+ * 2. logo animation is playing
+ * 3. gameplay UI is fading in
+ * 4. gameplay
+ * 
+ * The central function is Update, which manages all user input.
+ *
+ */
 public class GameManager : MonoBehaviour
 {
+    // Statics
+
     public static GameManager Instance;
+
+    // Prefabs & AudioSources
 
     public GameObject prefabDecisionLine;
 
@@ -16,55 +31,38 @@ public class GameManager : MonoBehaviour
     public GameObject gameplayPanel;
     public GameObject textPanel;
 
-    public GameObject ctPanel1;
-    public GameObject ctPanel2;
-    public GameObject ctPanel3;
-    public GameObject ctPanel4;
+    public GameObject logoFrame1;
+    public GameObject logoFrame2;
+    public GameObject logoFrame3;
+    public GameObject logoFrame4;
 
     public GameObject scrollView;
 
     public GameObject breachButton;
 
     public AudioSource soundLogo;
+    public AudioSource soundTrack;
 
-    private int focusButtonIndex = 0;
-    private GameObject focusButton;
-
+    // base quest that is played and its
+    // currently active event
     private QG_Quest quest;
     private QG_Event currentEvent;
 
+    // current decisions lines and how
+    // they map to the active events endings
     private List<GameObject> decisionLines;
     private Dictionary<GameObject, string> decisionLineToEnding;
 
-    private bool drawQuest = false;
+    // decision line that currently has focus
+    private int focusButtonIndex = 0;
+    private GameObject focusButton;
 
-    private bool fadeInFinished = false;
-
-    private bool waitForBreach = true;
-
-
-    string introText = @"Cybertext 2020 © Night Corp.
-
-> Transmission incoming ... 
-| -----------------------------------------------------------------------------------------------------------------------------------
-|
-| Use ↑↓ or W/A to select options, press ENTER or E to confirm.
-|
-| Press TAB to toggle Quest UI visibility.
-| Mind the small buttons in it on the top right, they let you look at other active (sub-)quest layers.
-|
-| Legal info: You have 5 min. to consume this product. Do not exceed the deadline. Do not modify
-| the product. Do not make copies of the product. All illegal action WILL be punished severely.
-|
-| Enjoy!
-|
-| -----------------------------------------------------------------------------------------------------------------------------------
-
-> Transmission End
-
-> Awaiting user input ...";
+    private bool waitForBreach  = true;   // are we waiting for the first Return?
+    private bool fadeInFinished = false;  // has gameplay UI faded in?
+    private bool drawQuest      = false;  // has the user toggled quest drawing to active?
 
 
+    /* Phase 1: Initializes the game manager. */
     private void Awake()
     {
         Instance = this;
@@ -75,31 +73,34 @@ public class GameManager : MonoBehaviour
         gameplayPanel.SetActive(false);
     }
 
+    /* Phase 2: Loads the quest + first event, issues the logo animation and starts sound. */
     private void StartIntro()
     {
         string[] a = { "end" };
 
-        QG_EventPool tutorialPool = Resources.Load<QG_EventPool>("TestQuest/Pool0_Tutorial");
+        QG_EventPool tutorialPool = Resources.Load<QG_EventPool>("MainQuest/Pools/Pl_00Tut_D");
 
         tutorialPool.pool[0].callback = () =>
             textPanel.GetComponent<Text>().text = "Cybertext 2020 © Night Corp.\n";
 
         quest = new QG_Quest(
             "Wand'rer",
-            Resources.Load<QG_EventPool>("TestQuest/Pool0_Tutorial"),
-            new List<QG_EventPool>(Resources.LoadAll<QG_EventPool>("TestQuest")),
+            Resources.Load<QG_EventPool>("MainQuest/Pools/Pl_00Tut_D"),
+            new List<QG_EventPool>(Resources.LoadAll<QG_EventPool>("MainQuest")),
             new List<string>(a)
         );
 
         currentEvent = quest.NextEvent();
 
         LoadEvent(currentEvent);
-        StartCoroutine(FadeInOut());
+        StartCoroutine(TransitionToGameplay());
 
         soundLogo.Play();
+        soundTrack.Play();
     }
 
-    IEnumerator FadeIn(SpriteRenderer image, float duration)
+    /* Helper function that fades an image in duration seconds. */
+    private IEnumerator FadeIn(SpriteRenderer image, float duration)
     {
         image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
 
@@ -114,38 +115,38 @@ public class GameManager : MonoBehaviour
         image.color = new Color(image.color.r, image.color.g, image.color.b, 1.0f);
     }
 
-    IEnumerator FadeInOut()
+    /* Phase 2-3: Plays the logo animation, then fades in gameplay UI */
+    IEnumerator TransitionToGameplay()
     {
-        // fading in ct
+        // fading in/out logo frames
 
-        GameObject[] cts = { ctPanel1, ctPanel2, ctPanel3, ctPanel4 };
+        GameObject[] frames = { logoFrame1, logoFrame2, logoFrame3, logoFrame4 };
 
-        ctPanel1.SetActive(true);
-        StartCoroutine(FadeIn(ctPanel1.GetComponent<SpriteRenderer>(), 2.2f));
+        logoFrame1.SetActive(true);
+        StartCoroutine(FadeIn(logoFrame1.GetComponent<SpriteRenderer>(), 2.2f));
         yield return new WaitForSeconds(2.7f);
-        ctPanel1.SetActive(false);
+        logoFrame1.SetActive(false);
 
         for (int i=1; i<4; i++)
         {
-            cts[i].SetActive(true);
-            //StartCoroutine(FadeIn(cts[i].GetComponent<SpriteRenderer>(), 0.2f));
+            frames[i].SetActive(true);
             yield return new WaitForSeconds(0.1f);
+
             if (i != 0)
-                cts[i].SetActive(false);
+                frames[i].SetActive(false);
         }
 
         for (int i = 2; i >= 0; i--)
         {
-            cts[i].SetActive(true);
-            //StartCoroutine(FadeIn(cts[i].GetComponent<SpriteRenderer>(), 0.2f));
+            frames[i].SetActive(true);
             yield return new WaitForSeconds(0.1f);
 
             if (i != 0)
-                cts[i].SetActive(false);
+                frames[i].SetActive(false);
         }
 
         yield return new WaitForSeconds(2.0f);
-        cts[0].SetActive(false);
+        frames[0].SetActive(false);
 
         // fading in gameplay
 
@@ -175,16 +176,17 @@ public class GameManager : MonoBehaviour
 
     }
 
+    /* Forces the text field to scroll to the bottom. */
     IEnumerator ForceScrollDown()
     {
-        // Wait for end of frame AND force update all canvases before setting to bottom.
         yield return new WaitForEndOfFrame();
         Canvas.ForceUpdateCanvases();
         scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0f;
         Canvas.ForceUpdateCanvases();
     }
 
-    IEnumerator Waiting(float seconds)
+    /* Plays the idle animation in the text field during NoChoiceTimedEvents. */
+    IEnumerator WaitingAnimation(float seconds)
     {
         seconds -= 0.1f;
 
@@ -205,8 +207,10 @@ public class GameManager : MonoBehaviour
         textPanel.GetComponent<Text>().text = orig;
     }
 
+    /* Responsible for all user input. */
     private void Update()
     {
+        // phase 1 ends when Return is pressed
         if (waitForBreach && Input.GetKeyDown(KeyCode.Return))
         {
             waitForBreach = false;
@@ -215,21 +219,23 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.F7))
+        // game reset
+        // TODO: bugged
+        /*if (Input.GetKeyDown(KeyCode.F7))
         {
             string[] a = { "end" };
 
-            QG_EventPool tutorialPool = Resources.Load<QG_EventPool>("TestQuest/Pool0_Tutorial");
+            QG_EventPool tutorialPool = Resources.Load<QG_EventPool>("MainQuest/Pools/Pl_00Tut_D");
 
-            textPanel.GetComponent<Text>().text = introText;
+            textPanel.GetComponent<Text>().text = Resources.Load<TextAsset>("IntroText").text;
 
             tutorialPool.pool[0].callback = () =>
                 textPanel.GetComponent<Text>().text = "Cybertext 2020 © Night Corp.\n\n";
 
             quest = new QG_Quest(
                 "Wand'rer",
-                Resources.Load<QG_EventPool>("TestQuest/Pool0_Tutorial"),
-                new List<QG_EventPool>(Resources.LoadAll<QG_EventPool>("TestQuest")),
+                Resources.Load<QG_EventPool>("MainQuest/Pools/Pool0_Tutorial"),
+                new List<QG_EventPool>(Resources.LoadAll<QG_EventPool>("MainQuest")),
                 new List<string>(a)
             );
 
@@ -241,14 +247,15 @@ public class GameManager : MonoBehaviour
                 QG_QuestUIHandler.Instance.DrawQuest(quest, -1, true);
 
             return;
-        }
+        }*/
 
+        // toggle quest UI visibility
         if (fadeInFinished && Input.GetKeyDown(KeyCode.Tab))
         {
             if (drawQuest)
             {
                 drawQuest = false;
-                QG_QuestUIHandler.Instance.ClearAll();
+                QG_QuestUIHandler.Instance.Deactivate();
             }
             else
             {
@@ -257,9 +264,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // none of the folowing user input is sensible when one of these
+        // cases is true
         if (currentEvent == null || currentEvent is NoChoiceTimedEvent)
             return;
 
+        // player commits to a selected decision line
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
             textPanel.GetComponent<Text>().text += "\n\n[USER DECISION]  »" + focusButton.transform.GetChild(0).GetComponent<Text>().text;
@@ -279,6 +289,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // player switches decision lines
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             focusButtonIndex = (focusButtonIndex + 1) % optionsUI.transform.childCount;
@@ -295,6 +306,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /* Handles NoDecisionTimedEvents. */
     private IEnumerator ProcessNoDecisionTimedEvents()
     {
         // unload decision lines
@@ -310,7 +322,7 @@ public class GameManager : MonoBehaviour
         while (currentEvent != null && currentEvent is NoChoiceTimedEvent)
         {
             float secToWait = ((NoChoiceTimedEvent)currentEvent).secondsToWait;
-            StartCoroutine(Waiting(secToWait));
+            StartCoroutine(WaitingAnimation(secToWait));
             yield return new WaitForSeconds(secToWait);
             quest.EventUpdate(currentEvent, "standard");
             currentEvent = quest.NextEvent();

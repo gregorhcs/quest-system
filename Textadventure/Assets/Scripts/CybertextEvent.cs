@@ -1,13 +1,11 @@
 ﻿using Assets.Scripts.QGSystem;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
+    /* Special QG_Event contains text to be displayed 
+     * and decisions to choose from. */
     [CreateAssetMenu(menuName = "Cybertext/TextEvent")]
     public class CybertextEvent : QG_Event
     {

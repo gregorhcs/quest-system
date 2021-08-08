@@ -170,7 +170,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: -10
   far clip plane: 1000
   field of view: 60
   orthographic: 1
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1801314886}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.50000024
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1403,13 +1403,14 @@ MonoBehaviour:
   optionsUI: {fileID: 201647268}
   gameplayPanel: {fileID: 687059850}
   textPanel: {fileID: 1486253975}
-  ctPanel1: {fileID: 584427838}
-  ctPanel2: {fileID: 1264716861}
-  ctPanel3: {fileID: 1964581383}
-  ctPanel4: {fileID: 1209802286}
+  logoFrame1: {fileID: 584427838}
+  logoFrame2: {fileID: 1264716861}
+  logoFrame3: {fileID: 1964581383}
+  logoFrame4: {fileID: 1209802286}
   scrollView: {fileID: 991933086}
   breachButton: {fileID: 533620495}
-  soundLogo: {fileID: 1347296118}
+  soundLogo: {fileID: 1347296117}
+  soundTrack: {fileID: 1347296118}
 --- !u!4 &1347296116
 Transform:
   m_ObjectHideFlags: 0
@@ -1653,7 +1654,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 508.2, y: -253.2521}
+  m_AnchoredPosition: {x: 508.2, y: -253.25208}
   m_SizeDelta: {x: 1016.447, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1486253977
@@ -1806,6 +1807,10 @@ MonoBehaviour:
   uiLinePrefab: {fileID: 3769798555375810704, guid: 2758b42e8a03d5c478154ef42bc3e3c6,
     type: 3}
   uiStarPrefab: {fileID: 5969057935918860836, guid: b11350ee146f33f40b3011890c05e9c9,
+    type: 3}
+  uiLSwitchPrefab: {fileID: 4626803612100990522, guid: e5c196467fdd8994d9b99e166b66fa5e,
+    type: 3}
+  uiRSwitchPrefab: {fileID: 21748254753613541, guid: da5e85fde569d094da7e83798ffe1bfc,
     type: 3}
 --- !u!4 &1734457993
 Transform:

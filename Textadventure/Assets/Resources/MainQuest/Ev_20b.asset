@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071186eaf00eabd43bb36c79b9bc8340, type: 3}
+  m_Name: Ev_20b
+  m_EditorClassIdentifier: 
+  endings:
+  - standard
+  ending: 
+  endingEventPools:
+  - {fileID: 11400000, guid: 4b990a2e92eeee144aa4c5e3b3d8efd2, type: 2}
+  intensity: 0
+  quest: {fileID: 0}
+  text: 'The knot of time unravels, depressurizes
+
+    A fallen body dies
+
+    In
+    half a nanosecond a mind asks itself questions
+
+    Of cruel, dark cities and
+    the power of pain.'
+  decisionTexts: []
+  secondsToWait: 4

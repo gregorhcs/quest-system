@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071186eaf00eabd43bb36c79b9bc8340, type: 3}
+  m_Name: Event5
+  m_EditorClassIdentifier: 
+  endings:
+  - standard
+  ending: 
+  endingEventPools:
+  - {fileID: 11400000, guid: 42de1d9d26aa53c4c87d7bfd6b0ab418, type: 2}
+  intensity: 0
+  quest: {fileID: 11400000, guid: 9499281e2c9722545b371fdf34ccdef5, type: 2}
+  text: 'A menace of matte gray, postmodernly deconstructed and rebuilt
+
+    A queen
+    of power, a human, animal, an intersection of meaning
+
+    Silver flashes, lightnings
+    on glassy dark
+
+    Untouchable and high
+
+    Evil eyes staring down'
+  decisionTexts: []
+  secondsToWait: 4
