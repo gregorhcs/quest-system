@@ -55,11 +55,11 @@ public class GameManager : MonoBehaviour
 
     // decision line that currently has focus
     private int focusButtonIndex = 0;
-    private GameObject focusButton;
+    private GameObject focusButton = null;
 
     private bool waitForBreach  = true;   // are we waiting for the first Return?
     private bool fadeInFinished = false;  // has gameplay UI faded in?
-    private bool drawQuest      = false;  // has the user toggled quest drawing to active?
+    private bool drawQuest      = true;  // has the user toggled quest drawing to active?
 
 
     /* Phase 1: Initializes the game manager. */
@@ -99,7 +99,8 @@ public class GameManager : MonoBehaviour
         soundTrack.Play();
     }
 
-    /* Helper function that fades an image in duration seconds. */
+    /* Helper function that fades an image in duration seconds. 
+       https://forum.unity.com/threads/simple-ui-animation-fade-in-fade-out-c.439825/ */
     private IEnumerator FadeIn(SpriteRenderer image, float duration)
     {
         image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
@@ -176,7 +177,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    /* Forces the text field to scroll to the bottom. */
+    /* Forces the text field to scroll to the bottom. 
+       https://forum.unity.com/threads/scroll-to-the-bottom-of-a-scrollrect-in-code.310919/#post-3461657 */
     IEnumerator ForceScrollDown()
     {
         yield return new WaitForEndOfFrame();
@@ -210,6 +212,12 @@ public class GameManager : MonoBehaviour
     /* Responsible for all user input. */
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+            return;
+        }
+
         // phase 1 ends when Return is pressed
         if (waitForBreach && Input.GetKeyDown(KeyCode.Return))
         {
@@ -292,17 +300,29 @@ public class GameManager : MonoBehaviour
         // player switches decision lines
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            focusButtonIndex = (focusButtonIndex + 1) % optionsUI.transform.childCount;
-            focusToButton(optionsUI.transform.GetChild(focusButtonIndex).gameObject);
+            Debug.Log("Index Pre " + focusButtonIndex);
+
+            focusButtonIndex += 1;
+
+            if (focusButtonIndex > optionsUI.transform.childCount - 1)
+                focusButtonIndex = 0;
+
+            Debug.Log("Index Seq " + focusButtonIndex);
+
+            FocusToButton(optionsUI.transform.GetChild(focusButtonIndex).gameObject);
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            focusButtonIndex = focusButtonIndex - 1;
+            Debug.Log("Index Pre " + focusButtonIndex);
+
+            focusButtonIndex -= 1;
             
             if (focusButtonIndex < 0)
                 focusButtonIndex = optionsUI.transform.childCount - 1;
 
-            focusToButton(optionsUI.transform.GetChild(focusButtonIndex).gameObject);
+            Debug.Log("Index Seq " + focusButtonIndex);
+
+            FocusToButton(optionsUI.transform.GetChild(focusButtonIndex).gameObject);
         }
     }
 
@@ -336,6 +356,7 @@ public class GameManager : MonoBehaviour
     }
 
 
+    /* Loads the content of event_ into the gameplay UI. */
     private void LoadEvent(QG_Event event_)
     {
         // unload
@@ -365,13 +386,16 @@ public class GameManager : MonoBehaviour
                 decisionLineToEnding[newDecisionLine] = cyberEvent.endings[i];
 
                 if (i == 0)
-                    focusToButton(newDecisionLine);
+                    FocusToButton(newDecisionLine);
             }
         }
 
+        focusButtonIndex = 0;
+
     }
 
-    private void focusToButton(GameObject newFocusButton)
+    /* Switches focus of decision lines to newFocusButton. */
+    private void FocusToButton(GameObject newFocusButton)
     {
         if (focusButton != null)
         {

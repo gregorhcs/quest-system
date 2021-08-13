@@ -29,15 +29,15 @@ namespace Assets.Scripts.QGSystem
 
         // Constants
 
-        private Vector3 ORIGIN = new Vector3(-1.2f, 0, 0);
+        private readonly Vector3 ORIGIN = new Vector3(-1.2f, 0, 0);
 
-        private float HORIZ_GAP = 0.7f;
-        private float VERT_GAP  = 0.7f;
+        private readonly float HORIZ_GAP = 0.7f;
+        private readonly float VERT_GAP  = 0.7f;
 
-        private float CHANCE_HIDE_FARAWAY = 0.7f;
+        private readonly float CHANCE_HIDE_FARAWAY = 0.7f;
 
-        private Bounds UI_BOUNDARIES = 
-            new Bounds(new Vector3(0, 0, 0), new Vector3(4.5f, 1.6f));
+        private readonly Bounds UI_BOUNDARIES = 
+                     new Bounds(new Vector3(0, 0, 0), new Vector3(4.5f, 1.6f));
 
         // Prefabs
 
@@ -354,7 +354,8 @@ namespace Assets.Scripts.QGSystem
         // ---------------------------------------------------------------------
 
         /* Plays an animation which lets two sets of arrows move and vanish. 
-           If a set of arrows is rotated, then it'll move in the respective new direction. */
+           If a set of arrows is rotated, then it'll move in the respective new direction. 
+           https://forum.unity.com/threads/simple-ui-animation-fade-in-fade-out-c.439825/*/
         private IEnumerator LayerSwitchAnimation(float duration, GameObject arrows1, GameObject arrows2)
         {
             float DISTANCE = 1.27f;
@@ -466,7 +467,8 @@ namespace Assets.Scripts.QGSystem
             }
         }
 
-        /* Draws a line from start to end with color depending on used. */
+        /* Draws a line from start to end with color depending on used. 
+           https://unitycoder.com/blog/2017/08/27/drawing-lines/ */
         private void DrawLine(Vector3 start, Vector3 end, bool used)
         {
             // boundary test

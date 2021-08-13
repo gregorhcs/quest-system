@@ -14,22 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endings:
   - SubQuestEnd
-  ending: 
   endingEventPools:
   - {fileID: 11400000, guid: a0d8a5a9fe232f44d919b1c5c77be7f1, type: 2}
-  intensity: 0
+  ending: 
   quest: {fileID: 0}
-  name: SubQuest1
-  start: {fileID: 11400000, guid: 06eb24e27d6f30f4fbb06a05ba0a4f5c, type: 2}
+  startPool: {fileID: 11400000, guid: 06eb24e27d6f30f4fbb06a05ba0a4f5c, type: 2}
   eventPools:
   - {fileID: 11400000, guid: 06eb24e27d6f30f4fbb06a05ba0a4f5c, type: 2}
   - {fileID: 11400000, guid: 18f28b52520cee5448b5a38d234485ff, type: 2}
   - {fileID: 11400000, guid: 688d4d20a7a88104384df36ecef913bd, type: 2}
   - {fileID: 11400000, guid: 4f665f3f3e52ddf458aad70b5d77a65e, type: 2}
   - {fileID: 11400000, guid: 67627085d27af6248a578ef014ed9c8d, type: 2}
-  poolsQueue:
-  - {fileID: 11400000, guid: 06eb24e27d6f30f4fbb06a05ba0a4f5c, type: 2}
-  currentPools: []
-  currentEvents: []
+  poolsQueue: []
+  activePools:
+  - {fileID: 11400000, guid: 18f28b52520cee5448b5a38d234485ff, type: 2}
+  activeEvents:
+  - {fileID: 11400000, guid: 499a8059009b4df4e8ea871205888416, type: 2}
   currentSubQuest: {fileID: 0}
-  end: {fileID: 11400000, guid: 67627085d27af6248a578ef014ed9c8d, type: 2}

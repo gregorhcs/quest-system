@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endings:
   - end
-  ending: 
   endingEventPools:
   - {fileID: 11400000, guid: f6dc932ef0571084688b4d5b295a2b24, type: 2}
-  intensity: 0
+  ending: 
   quest: {fileID: 0}
-  text: '[END]'
+  text: '[END] (exit with Esc)'
   decisionTexts:
   - Something ends, something begins.

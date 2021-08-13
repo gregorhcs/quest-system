@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endings:
   - standard
-  ending: 
   endingEventPools:
   - {fileID: 11400000, guid: 960ef46059cacac469d4986977ce3c76, type: 2}
-  intensity: 0
+  ending: 
   quest: {fileID: 0}
   text: 'Images of capitalistic forces penetrate my mind
 
@@ -29,7 +28,7 @@ MonoBehaviour:
     High
     above the cold towers, laughing
 
-    But the street is mine, and is I run, so
+    But the street is mine, and as I run, so
     does it'
   decisionTexts: []
   secondsToWait: 4

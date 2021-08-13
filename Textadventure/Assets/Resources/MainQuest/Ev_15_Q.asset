@@ -14,13 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endings:
   - SubQuestEnd
-  ending: 
   endingEventPools:
   - {fileID: 11400000, guid: e041d8f3281da7541808a88a6df4c5f9, type: 2}
-  intensity: 0
+  ending: 
   quest: {fileID: 0}
-  name: SubQuest2
-  start: {fileID: 11400000, guid: 0e553e03fafe9bb4fa4033e49a341f98, type: 2}
+  startPool: {fileID: 11400000, guid: 0e553e03fafe9bb4fa4033e49a341f98, type: 2}
   eventPools:
   - {fileID: 11400000, guid: 0e553e03fafe9bb4fa4033e49a341f98, type: 2}
   - {fileID: 11400000, guid: 0f372972c3e5542499c76e7efd81e76d, type: 2}
@@ -29,8 +27,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8772a0f2b2856da4da22b82c3e1dda79, type: 2}
   - {fileID: 11400000, guid: 42de1d9d26aa53c4c87d7bfd6b0ab418, type: 2}
   poolsQueue:
-  - {fileID: 11400000, guid: 0e553e03fafe9bb4fa4033e49a341f98, type: 2}
-  currentPools: []
-  currentEvents: []
+  - {fileID: 0}
+  activePools: []
+  activeEvents: []
   currentSubQuest: {fileID: 0}
-  end: {fileID: 11400000, guid: 42de1d9d26aa53c4c87d7bfd6b0ab418, type: 2}
