@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
     public AudioSource soundLogo;
     public AudioSource soundTrack;
 
+    public Texture2D mouseCursor;
+
     // base quest that is played and its
     // currently active event
     private QG_Quest quest;
@@ -61,6 +63,10 @@ public class GameManager : MonoBehaviour
     private bool fadeInFinished = false;  // has gameplay UI faded in?
     private bool drawQuest      = true;  // has the user toggled quest drawing to active?
 
+    private void Start()
+    {
+        Cursor.SetCursor(mouseCursor, new Vector2(0, 0), CursorMode.Auto);
+    }
 
     /* Phase 1: Initializes the game manager. */
     private void Awake()
@@ -403,7 +409,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < event_.endings.Count; i++)
             {
                 GameObject newDecisionLine = Instantiate(prefabDecisionLine, optionsUI.transform) as GameObject;
-                newDecisionLine.transform.GetChild(0).GetComponent<Text>().text = "  " + cyberEvent.decisionTexts[i];
+                newDecisionLine.transform.GetChild(0).GetComponent<Text>().text = "     " + cyberEvent.decisionTexts[i];
                 decisionLines.Add(newDecisionLine);
                 decisionLineToEnding[newDecisionLine] = cyberEvent.endings[i];
 

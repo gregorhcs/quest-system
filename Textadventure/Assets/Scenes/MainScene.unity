@@ -1504,6 +1504,7 @@ MonoBehaviour:
   breachButton: {fileID: 533620495}
   soundLogo: {fileID: 1347296117}
   soundTrack: {fileID: 1347296118}
+  mouseCursor: {fileID: 2800000, guid: 0bf2669947ba1c2489fc034134098b69, type: 3}
 --- !u!4 &1347296116
 Transform:
   m_ObjectHideFlags: 0
