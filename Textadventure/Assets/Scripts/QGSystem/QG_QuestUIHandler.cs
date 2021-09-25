@@ -128,6 +128,7 @@ namespace Assets.Scripts.QGSystem
                 Fade(false, 0.25f);
 
             uiQuestPanel.SetActive(false);
+            uiSignalPanel.SetActive(false);
         }
 
         /* Clears and draws quest at depth with potential fade-in. */
