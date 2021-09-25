@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endings:
   - standard
-  ending: 
   endingEventPools:
   - {fileID: 11400000, guid: dba34d3011c16784a9fa2fa3dba1d36e, type: 2}
-  intensity: 0
+  ending: 
   quest: {fileID: 0}
-  text: "> Transmission Incoming\n\n\n| -----------------------------------------------------------------------------------------------------------------------------------\n|\n|
-    The following items are sources of content for this experience:\n| ~ Development:
-    Gregor S\xF6nnichsen (2021)\n| ~ Soundtrack: Dandhibeatz (2020). Trappy night\n|
-    ~ Logo Sound: CD Projekt RED (2013). Cyberpunk 2077 Teaser Trailer\n|\n| -----------------------------------------------------------------------------------------------------------------------------------\n\n\n>
+  text: "> Transmission Incoming\r\n\r\n\r\n| -----------------------------------------------------------------------------------------------------------------------------------\r\n|\r\n|
+    The following items are sources of content for this experience:\r\n| ~ Development:
+    Gregor S\xF6nnichsen (2021)\r\n| ~ Soundtrack: Aques Levaro / Steffen Schreiber
+    (2021). Hookshot\r\n| ~ Logo Sound: CD Projekt RED (2013). Cyberpunk 2077 Teaser
+    Trailer\r\n| ~ Font: Bahn Pro Font\r\n|\r\n| -----------------------------------------------------------------------------------------------------------------------------------\r\n\r\n\r\n>
     Transmission End"
   decisionTexts: []
   secondsToWait: 2

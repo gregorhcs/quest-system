@@ -146,7 +146,30 @@ public class GameManager : MonoBehaviour
                 frames[i].SetActive(false);
         }
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(0.9f);
+        frames[0].SetActive(false);
+
+        // fading in/out logo frames 2nd time
+
+        for (int i = 1; i < 3; i++)
+        {
+            frames[i].SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+
+            if (i != 0)
+                frames[i].SetActive(false);
+        }
+
+        for (int i = 1; i >= 0; i--)
+        {
+            frames[i].SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+
+            if (i != 0)
+                frames[i].SetActive(false);
+        }
+
+        yield return new WaitForSeconds(2.5f);
         frames[0].SetActive(false);
 
         // fading in gameplay
@@ -174,7 +197,6 @@ public class GameManager : MonoBehaviour
         }
 
         fadeInFinished = true;
-
     }
 
     /* Forces the text field to scroll to the bottom. 

@@ -42,6 +42,8 @@ namespace Assets.Scripts.QGSystem
         // Prefabs
 
         public GameObject uiQuestPanel;
+        public GameObject uiSignalPanel;
+
         public GameObject uiPoolButtonPrefab;
         public GameObject uiLayerButtonPrefab;
         public GameObject uiLinePrefab;
@@ -149,6 +151,7 @@ namespace Assets.Scripts.QGSystem
             nodePosRegistry.Clear();
 
             uiQuestPanel.SetActive(true);
+            uiSignalPanel.SetActive(true);
 
             // 1) sub quest handling -----------
 
