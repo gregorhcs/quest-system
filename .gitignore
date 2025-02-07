@@ -1,43 +1,26 @@
-# =============== #
-# Unity generated #
-# =============== #
-[Tt]emp/
-[Oo]bj/
-[Uu]nityGenerated/
-[Bb]uilds/
-[Ll]ibrary/
-
-
-# ===================================== #
-# Visual Studio / MonoDevelop generated #
-# ===================================== #
-/.vs/
-/.vscode/
-ExportedObj/
-*.svd
-*.userprefs
-*.csproj
-*.pidb
-*.suo
-*.sln
-*.user
-*.unityproj
-*.booproj
-
-# =============== #
-# Rider generated #
-# =============== #
-
-.idea/
-
-# ============ #
-# OS generated #
-# ============ #
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-Icon?
-ehthumbs.db
+# == Windows ==
 Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# == Use opt-in instead of opt-out for root folder ==
+/*
+/*/
+
+# == Git ==
+!.gitattributes
+!.gitignore
+!.gitmodules
+
+# == Visual Studio ==
+!.editorconfig
+!*.md
+
+# == Unity ==
+!/Assets/
+!/ProjectSettings/
+!/Packages/
+InitTestScene*
+PerformanceTestRunInfo*
+!Jenkinsfile
